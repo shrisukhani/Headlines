@@ -5,10 +5,15 @@ import android.os.Bundle;
 
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.widget.Text;
+import com.facebook.litho.sections.Section;
+import com.facebook.litho.sections.SectionContext;
+import com.facebook.litho.sections.common.SingleComponentSection;
+import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
+import com.facebook.yoga.YogaEdge;
 
-import csci5115team5.com.headlines.HeadlinesListItem;
 import csci5115team5.com.headlines.R;
+import csci5115team5.com.headlines.ui.components.HeadlinesListItem;
+import csci5115team5.com.headlines.ui.sections.HeadlinesListSection;
 
 public class HeadlinesActivity extends AppCompatActivity {
 
@@ -16,19 +21,15 @@ public class HeadlinesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setContentView(R.layout.activity_headlines);
-        ComponentContext context = new ComponentContext(this);
-        setContentView(LithoView.create(context,
-//                Text.create(context)
-//                .text("Shri")
-//                .textSizeSp(22).build()));
-                HeadlinesListItem.create(new ComponentContext(this))
-                        .bigImgDrawable(R.drawable.shri)
-                        .title("Big Title")
-                        .shortSummary("This is a super short summary about the article we're looking at")
-                        .publicationLogoDrawable(R.drawable.shri)
-                        .dayDateTime("Tue, 11-27-2018\n03:49 PM")
-                        .publicationName("The New York Times")
-                        .build()));
+        SectionContext context = new SectionContext(this);
+
+        setContentView(
+                LithoView.create(
+                        context,
+                        RecyclerCollectionComponent.create(context)
+                                .marginDip(YogaEdge.ALL, 4)
+                                .section(HeadlinesListSection.create(context).build())
+                                .disablePTR(true)
+                                .build()));
     }
 }

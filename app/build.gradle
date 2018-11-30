@@ -43,4 +43,11 @@ dependencies {
 
     // For testing
     testImplementation 'com.facebook.litho:litho-testing:0.21.0'
+
+    // Sections
+    implementation 'com.facebook.litho:litho-sections-core:0.21.0'
+    implementation 'com.facebook.litho:litho-sections-widget:0.21.0'
+    compileOnly 'com.facebook.litho:litho-sections-annotations:0.21.0'
+
+    annotationProcessor 'com.facebook.litho:litho-sections-processor:0.21.0'
 }
