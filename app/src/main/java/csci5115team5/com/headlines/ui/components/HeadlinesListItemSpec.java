@@ -55,7 +55,8 @@ public class HeadlinesListItemSpec {
                 .build();
     }
 
-    private static Image.Builder genStoryImgBuilder(ComponentContext c, int storyImgDrawable) {
+    private static Image.Builder genStoryImgBuilder(
+            ComponentContext c, int storyImgDrawable) {
         return Image.create(c)
                 .drawableRes(storyImgDrawable)
                 .widthDip(100)
@@ -78,7 +79,8 @@ public class HeadlinesListItemSpec {
                 .textColor(0xff5b6362);
     }
 
-    private static Image.Builder genPubImgBuilder(ComponentContext c, int logoDrawable) {
+    private static Image.Builder genPubImgBuilder(
+            ComponentContext c, int logoDrawable) {
         return Image.create(c)
                 .heightDip(32)
                 .scaleType(ImageView.ScaleType.CENTER_CROP)
