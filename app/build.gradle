@@ -50,4 +50,7 @@ dependencies {
     compileOnly 'com.facebook.litho:litho-sections-annotations:0.21.0'
 
     annotationProcessor 'com.facebook.litho:litho-sections-processor:0.21.0'
+
+    // GSON Dependency
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
