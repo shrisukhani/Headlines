@@ -1,7 +1,7 @@
 package csci5115team5.com.headlines.ui.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.litho.LithoView;
 import com.facebook.litho.sections.SectionContext;
@@ -11,6 +11,8 @@ import com.facebook.yoga.YogaEdge;
 import csci5115team5.com.headlines.ui.sections.HeadlinesListSection;
 
 public class HeadlinesActivity extends AppCompatActivity {
+    private static final String TAG = HeadlinesActivity.class.getSimpleName();
+    private static final int INTERNET_PERM_REQ_CODE = 12345;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
