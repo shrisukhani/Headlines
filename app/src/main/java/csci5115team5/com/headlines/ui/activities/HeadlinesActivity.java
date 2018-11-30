@@ -3,16 +3,11 @@ package csci5115team5.com.headlines.ui.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.facebook.litho.ComponentContext;
 import com.facebook.litho.LithoView;
-import com.facebook.litho.sections.Section;
 import com.facebook.litho.sections.SectionContext;
-import com.facebook.litho.sections.common.SingleComponentSection;
 import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
 import com.facebook.yoga.YogaEdge;
 
-import csci5115team5.com.headlines.R;
-import csci5115team5.com.headlines.ui.components.HeadlinesListItem;
 import csci5115team5.com.headlines.ui.sections.HeadlinesListSection;
 
 public class HeadlinesActivity extends AppCompatActivity {
