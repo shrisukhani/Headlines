@@ -10,11 +10,39 @@ public interface NewsApiService {
     public Call<NewsApiResult> getStoriesForQuery(@Query("q") String searchQuery);
 
     @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryFromDate(@Query("from") String from);
+    public Call<NewsApiResult> getStoriesForQuery(
+            @Query("q") String searchQuery, int pageNo);
 
     @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryToDate(@Query("to") String to);
+    public Call<NewsApiResult> getStoriesForQueryFromDate(
+            @Query("q") String searchQuery, @Query("from") String from);
 
     @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryBetweenDates(@Query("from") String from, @Query("to") String to);
+    public Call<NewsApiResult> getStoriesForQueryFromDate(
+            @Query("q") String searchQuery,
+            @Query("from") String from,
+            @Query("page") int pageNo);
+
+    @GET("/v2/everything")
+    public Call<NewsApiResult> getStoriesForQueryToDate(
+            @Query("q") String searchQuery, @Query("to") String to);
+
+    @GET("/v2/everything")
+    public Call<NewsApiResult> getStoriesForQueryToDate(
+            @Query("q") String searchQuery,
+            @Query("to") String to,
+            @Query("page") int pageNo);
+
+    @GET("/v2/everything")
+    public Call<NewsApiResult> getStoriesForQueryBetweenDates(
+            @Query("q") String searchQuery,
+            @Query("from") String from,
+            @Query("to") String to);
+
+    @GET("/v2/everything")
+    public Call<NewsApiResult> getStoriesForQueryBetweenDates(
+            @Query("q") String searchQuery,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("page") int pageNo);
 }
