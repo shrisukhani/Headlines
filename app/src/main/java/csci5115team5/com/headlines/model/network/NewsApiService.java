@@ -70,8 +70,10 @@ public class NewsApiService {
             @Override
             public void onResponse(Call<NewsApiResult> call, Response<NewsApiResult> response) {
                 if (response.isSuccessful()) {
+                    Log.d(TAG, "Call was Successful");
                     mEventHandler.dispatchEvent(new NewsApiResultEvent(response.body()));
                 } else {
+                    Log.e(TAG, response.message());
                     mEventHandler.dispatchEvent(new NewsApiResultEvent(null));
                 }
             }

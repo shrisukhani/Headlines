@@ -25,8 +25,7 @@ public class HeadlinesActivity extends AppCompatActivity {
                         context,
                         RecyclerCollectionComponent.create(context)
                                 .marginDip(YogaEdge.ALL, 4)
-                                .section(HeadlinesListSection.create(context).build())
-                                .disablePTR(true)
+                                .section(HeadlinesListSection.create(context).searchQuery("USA"))
                                 .build()));
     }
 }

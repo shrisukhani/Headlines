@@ -11,7 +11,7 @@ public interface NewsApiRetrofit {
 
     @GET("/v2/everything")
     public Call<NewsApiResult> getStoriesForQuery(
-            @Query("q") String searchQuery, int pageNo);
+            @Query("q") String searchQuery, @Query("page") int pageNo);
 
     @GET("/v2/everything")
     public Call<NewsApiResult> getStoriesForQueryFromDate(
