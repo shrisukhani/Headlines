@@ -1,48 +1,86 @@
 package csci5115team5.com.headlines.model.network;
 
+import android.util.Log;
+
+import com.facebook.litho.EventHandler;
+
 import csci5115team5.com.headlines.model.NewsApiResult;
+import csci5115team5.com.headlines.model.NewsApiResultEvent;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public interface NewsApiService {
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQuery(@Query("q") String searchQuery);
+public class NewsApiService {
+    private static final String TAG = NewsApiService.class.getSimpleName();
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQuery(
-            @Query("q") String searchQuery, int pageNo);
+    private final NewsApiRetrofit mNewsApiRetrofit;
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryFromDate(
-            @Query("q") String searchQuery, @Query("from") String from);
+    private EventHandler<NewsApiResultEvent> mEventHandler;
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryFromDate(
-            @Query("q") String searchQuery,
-            @Query("from") String from,
-            @Query("page") int pageNo);
+    NewsApiService(NewsApiRetrofit newsApiRetrofit) {
+        mNewsApiRetrofit = newsApiRetrofit;
+    }
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryToDate(
-            @Query("q") String searchQuery, @Query("to") String to);
+    public void registerEventHandler(EventHandler<NewsApiResultEvent> eventHandler) {
+        mEventHandler = eventHandler;
+    }
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryToDate(
-            @Query("q") String searchQuery,
-            @Query("to") String to,
-            @Query("page") int pageNo);
+    public void unregisterEventHandler() {
+        mEventHandler = null;
+    }
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryBetweenDates(
-            @Query("q") String searchQuery,
-            @Query("from") String from,
-            @Query("to") String to);
+    public void getStoriesForQuery(String searchQuery) {
+        handleCall(mNewsApiRetrofit.getStoriesForQuery(searchQuery));
+    }
 
-    @GET("/v2/everything")
-    public Call<NewsApiResult> getStoriesForQueryBetweenDates(
-            @Query("q") String searchQuery,
-            @Query("from") String from,
-            @Query("to") String to,
-            @Query("page") int pageNo);
+    public void getStoriesForQuery(String searchQuery, int pageNo) {
+        handleCall(mNewsApiRetrofit.getStoriesForQuery(searchQuery, pageNo));
+    }
+
+    public void getStoriesForQueryFromDate(String searchQuery, String from) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryFromDate(searchQuery, from));
+    }
+
+    public void getStoriesForQueryFromDate(
+            String searchQuery, String from, int pageNo) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryFromDate(searchQuery, from, pageNo));
+    }
+
+    public void getStoriesForQueryToDate(String searchQuery, String to) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryToDate(searchQuery, to));
+    }
+
+    public void getStoriesForQueryToDate(
+            String searchQuery, String to, int pageNo) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryToDate(searchQuery, to, pageNo));
+    }
+
+    public void getStoriesForQueryBetweenDates(
+            String searchQuery, String from, String to) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryBetweenDates(searchQuery, from, to));
+    }
+
+    public void getStoriesForQueryBetweenDates(
+            String searchQuery, String from, String to, int pageNo) {
+        handleCall(mNewsApiRetrofit.getStoriesForQueryBetweenDates(searchQuery, from, to, pageNo));
+    }
+
+    private void handleCall(Call<NewsApiResult> resultCall) {
+        resultCall.enqueue(new Callback<NewsApiResult>() {
+            @Override
+            public void onResponse(Call<NewsApiResult> call, Response<NewsApiResult> response) {
+                if (response.isSuccessful()) {
+                    mEventHandler.dispatchEvent(new NewsApiResultEvent(response.body()));
+                } else {
+                    mEventHandler.dispatchEvent(new NewsApiResultEvent(null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NewsApiResult> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
 }

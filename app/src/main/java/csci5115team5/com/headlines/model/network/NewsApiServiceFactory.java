@@ -19,25 +19,19 @@ public class NewsApiServiceFactory {
             ",reuters,techcrunch,the-new-york-times,the-wall-street-journal,usa-today,wired," +
             "the-washington-post,nbc-news,time";
 
-    private static OkHttpClient mNewsApiClient;
-    private static NewsApiService mNewsApiInstance;
+    private static OkHttpClient sNewsApiClient;
+    private static NewsApiRetrofit sNewsApi;
+    private static NewsApiService sNewsApiService;
 
     public static NewsApiService getNewsApiService() {
-
-        if (mNewsApiInstance == null) {
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://newsapi.org/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(getClientForNewsApiService())
-                    .build();
-            mNewsApiInstance = retrofit.create(NewsApiService.class);
+        if (sNewsApiService == null) {
+            sNewsApiService = new NewsApiService(getNewsApiRetrofit());
         }
-        return mNewsApiInstance;
+        return sNewsApiService;
     }
 
     private static OkHttpClient getClientForNewsApiService() {
-        if (mNewsApiClient == null) {
+        if (sNewsApiClient == null) {
             Interceptor interceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -56,10 +50,23 @@ public class NewsApiServiceFactory {
                     return chain.proceed(modifiedRequest);
                 }
             };
-            mNewsApiClient = new OkHttpClient.Builder()
+            sNewsApiClient = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
                     .build();
         }
-        return mNewsApiClient;
+        return sNewsApiClient;
     }
+
+    private static NewsApiRetrofit getNewsApiRetrofit() {
+        if (sNewsApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://newsapi.org/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getClientForNewsApiService())
+                    .build();
+            sNewsApi = retrofit.create(NewsApiRetrofit.class);
+        }
+        return sNewsApi;
+    }
+
 }
