@@ -2,6 +2,7 @@ package csci5115team5.com.headlines;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.soloader.SoLoader;
 
 public class HeadlinesApplication extends Application {
@@ -11,5 +12,6 @@ public class HeadlinesApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SoLoader.init(this, false);
+        Fresco.initialize(this);
     }
 }

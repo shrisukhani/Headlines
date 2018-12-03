@@ -1,6 +1,7 @@
 package csci5115team5.com.headlines.ui.sections;
 
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,7 +40,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import csci5115team5.com.headlines.R;
 import csci5115team5.com.headlines.model.NewsApiResult;
 import csci5115team5.com.headlines.model.NewsApiResultEvent;
 import csci5115team5.com.headlines.model.NewsStory;
@@ -234,7 +234,7 @@ public class HeadlinesListSectionSpec {
         return ComponentRenderInfo.create()
                 .component(
                         HeadlinesListItem.create(c)
-                                .bigImgDrawable(R.drawable.shri)
+                                .storyImageUri(Uri.parse(model.getUrlToImage().toString()))
                                 .title(model.getTitle())
                                 .description(model.getDescription())
                                 .dayDateTime(model.getFormattedDayDateTime())

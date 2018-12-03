@@ -1,21 +1,25 @@
 package csci5115team5.com.headlines.ui.components;
 
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.litho.Column;
 import com.facebook.litho.Component;
 import com.facebook.litho.ComponentContext;
 import com.facebook.litho.annotations.LayoutSpec;
 import com.facebook.litho.annotations.OnCreateLayout;
 import com.facebook.litho.annotations.Prop;
+import com.facebook.litho.fresco.FrescoImage;
 import com.facebook.litho.widget.Card;
-import com.facebook.litho.widget.Image;
 import com.facebook.litho.widget.Text;
 import com.facebook.yoga.YogaEdge;
 
 import csci5115team5.com.headlines.R;
+
+import static com.facebook.drawee.drawable.ScalingUtils.ScaleType.CENTER_CROP;
 
 @LayoutSpec
 public class HeadlinesListItemSpec {
@@ -27,14 +31,14 @@ public class HeadlinesListItemSpec {
             @Prop String description,
             @Prop String publicationName,
             @Prop String dayDateTime,
-            @Prop int bigImgDrawable) {
+            @Prop Uri storyImageUri) {
         return Card.create(c)
                 .marginDip(YogaEdge.HORIZONTAL, 2)
                 .content(
                         Column.create(c)
                                 .backgroundColor(0xffE8E8E8)
                                 .child(genTitleBuilder(c, title))
-                                .child(genStoryImgBuilder(c, bigImgDrawable))
+                                .child(genStoryImgBuilder(c, storyImageUri))
                                 .child(genPubNameDayDateTimeBuilder(c, publicationName, dayDateTime))
                                 .child(genDescriptionBuilder(c, description)))
                 .elevationDip(6)
@@ -42,14 +46,18 @@ public class HeadlinesListItemSpec {
                 .build();
     }
 
-    private static Image.Builder genStoryImgBuilder(
-            ComponentContext c, int storyImgDrawable) {
-        return Image.create(c)
-                .drawableRes(storyImgDrawable)
+    private static FrescoImage.Builder genStoryImgBuilder(
+            ComponentContext c, Uri storyImageUri) {
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(storyImageUri)
+                .build();
+        return FrescoImage.create(c)
+                .placeholderImage(c.getAndroidContext().getDrawable(R.drawable.story_img_placeholder))
+                .controller(controller)
                 .widthPercent(100f)
                 .heightDip(200)
                 .marginDip(YogaEdge.LEFT, 2)
-                .scaleType(ImageView.ScaleType.CENTER_CROP);
+                .actualImageScaleType(CENTER_CROP);
     }
 
     private static Text.Builder genPubNameDayDateTimeBuilder(
