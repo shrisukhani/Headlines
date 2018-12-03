@@ -236,7 +236,7 @@ public class HeadlinesListSectionSpec {
                         HeadlinesListItem.create(c)
                                 .bigImgDrawable(R.drawable.shri)
                                 .title(model.getTitle())
-                                .publicationLogoDrawable(R.drawable.shri)
+                                .description(model.getDescription())
                                 .dayDateTime(model.getFormattedDayDateTime())
                                 .publicationName(model.getSource().getName()))
                 .build();
