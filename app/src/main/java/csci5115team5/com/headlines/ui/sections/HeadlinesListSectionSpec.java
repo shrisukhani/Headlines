@@ -5,13 +5,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.litho.Column;
 import com.facebook.litho.StateValue;
 import com.facebook.litho.annotations.FromEvent;
 import com.facebook.litho.annotations.OnCreateInitialState;
 import com.facebook.litho.annotations.OnEvent;
 import com.facebook.litho.annotations.OnUpdateState;
 import com.facebook.litho.annotations.Param;
-import com.facebook.litho.annotations.Prop;
 import com.facebook.litho.annotations.State;
 import com.facebook.litho.sections.Children;
 import com.facebook.litho.sections.LoadingEvent;
@@ -47,6 +47,8 @@ import csci5115team5.com.headlines.model.network.NewsApiService;
 import csci5115team5.com.headlines.model.network.NewsApiServiceFactory;
 import csci5115team5.com.headlines.ui.components.HeadlinesListItem;
 
+import static com.facebook.yoga.YogaAlign.CENTER;
+
 @GroupSectionSpec
 public class HeadlinesListSectionSpec {
     private static final String TAG = HeadlinesListSectionSpec.class.getSimpleName();
@@ -55,7 +57,6 @@ public class HeadlinesListSectionSpec {
     @OnCreateChildren
     static Children onCreateChildren(
             SectionContext c,
-            @Prop String searchQuery,
             @State String query,
             @State boolean isFetching,
             @State boolean finishedInitialLoad,
@@ -63,6 +64,9 @@ public class HeadlinesListSectionSpec {
             @State int numTotalResults,
             @State List<NewsStory> stories) {
         Children.Builder builder = Children.create();
+        final Progress.Builder progress = Progress.create(c)
+                .widthDip(56).heightDip(56).alignSelf(CENTER);
+
         builder.child(
                 SingleComponentSection.create(c)
                         .component(
@@ -79,7 +83,7 @@ public class HeadlinesListSectionSpec {
                         .renderEventHandler(HeadlinesListSection.renderNewsStory(c)));
         builder.child(
                 isFetching
-                        ? SingleComponentSection.create(c).component(Progress.create(c).heightDip(56))
+                        ? SingleComponentSection.create(c).component(Column.create(c).child(progress))
                         : null);
         return builder.build();
     }
@@ -92,9 +96,8 @@ public class HeadlinesListSectionSpec {
             StateValue<Boolean> finishedInitialLoad,
             StateValue<Integer> lastPageFetched,
             StateValue<Integer> numTotalResults,
-            StateValue<List<NewsStory>> stories,
-            @Prop String searchQuery) {
-        query.set(searchQuery);
+            StateValue<List<NewsStory>> stories) {
+        query.set("USA");
         isFetching.set(false);
         finishedInitialLoad.set(false);
         lastPageFetched.set(0);

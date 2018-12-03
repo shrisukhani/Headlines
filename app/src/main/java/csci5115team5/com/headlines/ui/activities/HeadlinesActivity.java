@@ -26,7 +26,7 @@ public class HeadlinesActivity extends AppCompatActivity {
                         context,
                         RecyclerCollectionComponent.create(context)
                                 .marginDip(YogaEdge.ALL, 4)
-                                .section(HeadlinesListSection.create(context).searchQuery("USA"))
+                                .section(HeadlinesListSection.create(context))
                                 .build()));
 
         getSupportActionBar().setCustomView(R.layout.custom_appbar);
