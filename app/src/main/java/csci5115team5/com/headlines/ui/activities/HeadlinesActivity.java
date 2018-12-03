@@ -8,6 +8,7 @@ import com.facebook.litho.sections.SectionContext;
 import com.facebook.litho.sections.widget.RecyclerCollectionComponent;
 import com.facebook.yoga.YogaEdge;
 
+import csci5115team5.com.headlines.R;
 import csci5115team5.com.headlines.ui.sections.HeadlinesListSection;
 
 public class HeadlinesActivity extends AppCompatActivity {
@@ -27,5 +28,8 @@ public class HeadlinesActivity extends AppCompatActivity {
                                 .marginDip(YogaEdge.ALL, 4)
                                 .section(HeadlinesListSection.create(context).searchQuery("USA"))
                                 .build()));
+
+        getSupportActionBar().setCustomView(R.layout.custom_appbar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
 }
