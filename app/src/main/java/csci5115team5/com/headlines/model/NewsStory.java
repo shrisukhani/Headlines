@@ -8,6 +8,7 @@ import java.net.URL;
 
 public final class NewsStory {
     @SerializedName("title") private String mTitle;
+    @SerializedName("description") private String mDescription;
     @SerializedName("url") private URL mUrl;
     @SerializedName("urlToImage") private URL mUrlToImg;
     @SerializedName("publishedAt") private String mDayDateTime;
@@ -36,6 +37,10 @@ public final class NewsStory {
 
     public Source getSource() {
         return mSource;
+    }
+
+    public String getDescription() {
+        return mDescription;
     }
 
     public String getFormattedDayDateTime() {
