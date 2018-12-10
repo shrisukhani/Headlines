@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="csci5115team5.com.headlines">
+    package="shridharsukhani.com.headlines">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,9 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".HeadlinesApplication"
+        android:name="shridharsukhani.com.headlines.HeadlinesApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.HeadlinesActivity">
+        <activity android:name="shridharsukhani.com.headlines.ui.activities.HeadlinesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
